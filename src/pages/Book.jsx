@@ -14,7 +14,13 @@ function nextDays(n = 14) {
   return days;
 }
 
-const toISODate = (d) => d.toISOString().slice(0, 10);
+// Local calendar date. toISOString() is UTC, so evening in the Americas
+// (and early morning ahead of UTC) would book the neighboring day.
+const toISODate = (d) => {
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${d.getFullYear()}-${month}-${day}`;
+};
 const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
